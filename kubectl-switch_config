@@ -1,0 +1,47 @@
+#!/usr/bin/env sh
+#kubectl-switch-config - plugin for kubectl to easy switch between configuration files, using symbolic links
+#Author: Radoslaw Warowny
+#License: GPL (General Public License) version 3
+
+getopts h opt
+
+if [ "$opt" = "h" ]; then
+  echo Usage:
+  echo "\t kubectl switch-config [-h] [-l] | [<name>]"
+  echo
+  echo 'Notice: You shoud have created configuration file in your $HOME/.kube directory named: config-name before.'
+  exit
+fi
+
+config=$1
+
+if [ "$config" = "" ]; then
+  if [ -h $HOME/.kube/config ]; then
+	  ls -l $HOME/.kube/config | sed 's/.*config-//'
+  else
+    if [ -f $HOME/.kube/config ]; then
+      echo "ERROR: Configuration file \$HOME/.kube/config exists but it's not symbolic link"
+      echo "Notice: If it's your first time, backup or move your current $HOME/.kube/config file"
+      echo "to $HOME/.kube/config-somename. Than you can use it by: kubectl switch-config somename"
+    else
+      echo "ERROR: \$HOME/.kube/config symbolic link desn't exit."
+      echo "Notice: If it's your first time, create \$HOME/.kube/config-somename file and invoke:"
+      echo "kubectl switch-config somename"
+    fi
+    exit 1
+  fi
+	exit
+fi
+
+file=config-$config
+if ! cd $HOME/.kube; then
+  echo "ERROR: Directory $HOME/.kube is not accessable"
+fi
+  
+if [ -f $file ]; then
+  cd $HOME/.kube
+  ln -sf config-$config config
+else
+  echo "ERROR: Configuration file $file doesn't exist in your \$HOME/.kube directory. Configuration has NOT been switched."
+  exit 1
+fi
