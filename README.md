@@ -1,8 +1,8 @@
 # Kube switch-config
-Kubectl plugin for simple switching between configuration files.
+Kubectl plugin for simple switching between kubeconfig files.
 
 ## Initial setup
-Prepare separate configuration files in `$HOME/.kube` directory named (e.g.):
+Prepare separate kubeconfig files in `$HOME/.kube` directory named (e.g.):
 ```
 config-test
 config-prep
