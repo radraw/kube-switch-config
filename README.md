@@ -10,11 +10,11 @@ config-prod
 ...
 ```
 
-If you use [Charmed Kubernetes](https://ubuntu.com/kubernetes/docs) you can for example get cluster config with `juju scp` command:
+If you use [Charmed Kubernetes](https://ubuntu.com/kubernetes/docs) you can get cluster config with `juju scp` command (example):
 ```
 juju scp kubernetes-master/0:config ~/.kube/config-test
 ```
-If you already have `$HOME/.kube/config` regular file (not symlink), rename it or backup for example. This tool uses symbolic link with this name to switch between configurations.
+If you already have `$HOME/.kube/config` regular file (not symlink), rename it or remove (ensuring you don't need it or have a backup). This tool uses symbolic link with this name to switch between configurations.
 
 ## Usage
 
