@@ -3,13 +3,24 @@
 #Author: Radoslaw Warowny
 #License: GPL (General Public License) version 3
 
-getopts h opt
+getopts hl opt
 
 if [ "$opt" = "h" ]; then
   echo Usage:
   echo "\t kubectl switch-config [-h] [-l] | [<name>]"
   echo
-  echo 'Notice: You shoud have created configuration file in your $HOME/.kube directory named: config-name before.'
+  echo 'Notice: You shoud have created configuration file in your $HOME/.kube directory named: config-name before first use.'
+  echo
+  echo 'Options:'
+  echo '  -h  show (this) help'
+  echo '  -l  list available configuration names possible for switching'
+  echo
+  echo 'Invoking with no arguments shows current (lately selected) configuration'
+  exit
+fi
+
+if [ "$opt" = "l" ]; then
+  cd ~/.kube && ls -1 config-* | sed 's/^config-//'
   exit
 fi
 
